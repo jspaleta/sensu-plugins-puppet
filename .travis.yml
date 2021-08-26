@@ -23,9 +23,9 @@ script:
 - gem install sensu-plugins-puppet-*.gem
 - echo "travis envvars"
 - set |grep TRAVIS  
-- bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai  && cd bonsai && git checkout js/fix-travis-alpine-builds && git pull || echo 'bonsai/ exists, skipping git clone'"
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
-- INSTALL_DOCKER=1 ./bonsai/ruby-runtime/travis-build-ruby-plugin-assets.sh sensu-plugins-puppet
+- bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai || echo 'bonsai/ exists, skipping git clone'"
+- ./bonsai/ruby-runtime/travis-build-ruby-plugin-assets.sh sensu-plugins-puppet "alpine"
 before_deploy:
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
 deploy:
